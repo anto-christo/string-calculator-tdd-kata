@@ -20,4 +20,9 @@ describe('The string calculator', () => {
     const result = add("1,2,3");
     expect(result).toBe(6);
   })
+
+  test('should return the sum of all numbers if the input string has newline and comma separators', () => {
+    const result = add("1\n2,3");
+    expect(result).toBe(6);
+  })
 })
