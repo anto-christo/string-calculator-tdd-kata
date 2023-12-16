@@ -44,8 +44,13 @@ describe('The string calculator', () => {
     expect(() => add("1,-2,2,-4")).toThrow("negatives not allowed, found -2,-4");
   })
 
-  test('should ignore numbers greater than 1000 in the input string', () => {
+  test('should return the sum after ignoring numbers greater than 1000 in the input string', () => {
     const result = add("1,1001")
     expect(result).toBe(1);
+  })
+
+  test('should return the sum of all numbers with separators having more than 1 char length', () => {
+    const result = add("//[***]\n1***2***3");
+    expect(result).toBe(6);
   })
 })
