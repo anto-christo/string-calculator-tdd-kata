@@ -45,6 +45,7 @@ describe('The string calculator', () => {
   })
 
   test('should ignore numbers greater than 1000 in the input string', () => {
-    expect(() => add("1,1001")).toBe(1);
+    const result = add("1,1001")
+    expect(result).toBe(1);
   })
 })
