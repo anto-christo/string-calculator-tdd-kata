@@ -38,5 +38,5 @@ export function add(numbers: string): number {
     throw new Error(`negatives not allowed, found ${negativeNumbers.join(',')}`)
   }
 
-  return numbersToAdd.reduce((sum, number) => sum + number, 0);
+  return numbersToAdd.reduce((sum, number) => sum += number <= 1000 ? number : 0, 0);
 }
