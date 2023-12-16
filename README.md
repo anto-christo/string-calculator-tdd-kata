@@ -2,7 +2,7 @@
 
 This basic string calculator app has been built using [TypeScript](https://www.typescriptlang.org/) following the TDD approach.
 
-The development has been done iteratively using 3 pull requests.
+The development has been done iteratively using 4 pull requests.
 - [PR #1](https://github.com/anto-christo/string-calculator-tdd-kata/pull/1) - Sets up the inital project and development environment. Have used [Jest](https://jestjs.io/) for testing and [DeepSource](https://deepsource.com/) for maintaining code quality. Have used [GitHub Actions](https://github.com/features/actions) to run the tests and quality checks on CI.
 
 - [PR #2](https://github.com/anto-christo/string-calculator-tdd-kata/pull/2) - Adds the inital set of functionalities from point 1 to point 5 as mentioned in the blog.
