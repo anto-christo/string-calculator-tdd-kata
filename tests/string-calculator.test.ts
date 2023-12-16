@@ -43,4 +43,8 @@ describe('The string calculator', () => {
   test('should throw an error with all the negative numbers in message if negative numbers are passed as input', () => {
     expect(() => add("1,-2,2,-4")).toThrow("negatives not allowed, found -2,-4");
   })
+
+  test('should ignore numbers greater than 1000 in the input string', () => {
+    expect(() => add("1,1001")).toBe(1);
+  })
 })
