@@ -6,7 +6,7 @@
  * @param {string} customSeparatorIdentifier - The identifier marking the start of the custom separator.
  * @returns {string | null} The extracted custom separator, or null if not present or invalid.
  */
-function getCustomSeparator(numbers: string, customSeparatorIdentifier: string) {
+function getCustomSeparator(numbers: string, customSeparatorIdentifier: string): string | RegExp | null {
   const customSeparatorIdentifierLength = customSeparatorIdentifier.length
 
   if (!numbers.startsWith(customSeparatorIdentifier)) {
@@ -14,18 +14,29 @@ function getCustomSeparator(numbers: string, customSeparatorIdentifier: string) 
   }
 
   const customSeparatorLine = numbers.split('\n')[0];
-  const regex = /\[([^\]]*)\]/;
-  const match = regex.exec(customSeparatorLine);
+  const regex = /\[([^\]]*)\]/g;
+  const matchedSeparators: string[] = [];
+  let match: RegExpExecArray | null = null;
 
-  /**
-   * If the separator has content of the format [***],
-   * we use regex to fetch the separator that is between the square brackets.
-   */
-  if (match && match[1]) {
-    return match[1];
+  while ((match = regex.exec(customSeparatorLine)) !== null) {
+    if (match[1]) {
+      matchedSeparators.push(match[1])
+    }
   }
 
-  // If [***] is not present, we consider only a single separator to be present.
+  // If the is only one matched separator, we can directly return it as a string.
+  if (matchedSeparators.length === 1) {
+    return matchedSeparators[0];
+  }
+
+  // If there are more than one matched separators, we need to construct a regex and return it.
+  // Note: We need to escape some chars so that they are considered as literals.
+  if (matchedSeparators.length > 1) {
+    const escapedSeparators = matchedSeparators.map(char => char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+    return new RegExp(escapedSeparators);
+  }
+
+  // If a format that looks like [***] is not present, we consider only a single separator to be present.
   return customSeparatorLine.substring(customSeparatorIdentifierLength);
 }
 
