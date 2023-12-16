@@ -6,10 +6,12 @@
  * @returns {string | RegExp | null} The extracted separator(s) as a string, a regular expression, or null if no separator is found.
  */
 function getCustomMultiCharSeparator(customSeparatorLine: string) {
+  // This regex can be used to fetch the separators from within the square brackets.
   const regex = /\[([^\]]*)\]/g;
   const matchedSeparators: string[] = [];
   let match: RegExpExecArray | null = null;
 
+  // There can be multiple pairs of square brackets, we collect separators from all such brackets.
   while ((match = regex.exec(customSeparatorLine)) !== null) {
     if (match[1]) {
       matchedSeparators.push(match[1]);
@@ -63,8 +65,14 @@ export function add(numbers: string): number {
   const customSeparator = getCustomSeparator(numbers, "//");
 
   if (customSeparator) {
-    numbers = numbers.split('\n')[1];
-    separator = customSeparator;
+    const numbersLine = numbers.split('\n')[1];
+
+    // In case of custom separators, 
+    // we need to update our numbers with the contents from the line afte the separator.
+    if (numbersLine) {
+      numbers = numbersLine;
+      separator = customSeparator;
+    }
   }
 
   const numbersToAdd = numbers.split(separator).map(number => Number(number));
@@ -74,5 +82,7 @@ export function add(numbers: string): number {
     throw new Error(`negatives not allowed, found ${negativeNumbers.join(',')}`);
   }
 
+  // Add all the numbers.
+  // We ignore all numbers greater than 1000 from the final sum.
   return numbersToAdd.reduce((sum, number) => sum += number <= 1000 ? number : 0, 0);
 }
