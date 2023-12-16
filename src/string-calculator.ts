@@ -13,17 +13,7 @@ function getCustomSeparator(numbers: string, customSeparatorIdentifier: string) 
     return null;
   }
 
-  const [customSeparatorLine, numbersLine] = numbers.split('\n');
-
-  /**
-   * If the length of separator line is same as custom identifier length, then there is no separator.
-   * If the numbersLine is undefined, it means there was no `\n` in the string and hence no numbers to add.
-   * Note: we would still consider no numbers after a `\n` since that is essentially an empty string.
-   */
-  if (customSeparatorLine.length === customSeparatorIdentifierLength && numbersLine === undefined) {
-    return null;
-  }
-
+  const customSeparatorLine = numbers.split('\n')[0];
   return customSeparatorLine.substring(customSeparatorIdentifierLength);
 }
 
