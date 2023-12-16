@@ -14,6 +14,18 @@ function getCustomSeparator(numbers: string, customSeparatorIdentifier: string) 
   }
 
   const customSeparatorLine = numbers.split('\n')[0];
+  const regex = /\[([^\]]*)\]/;
+  const match = regex.exec(customSeparatorLine);
+
+  /**
+   * If the separator has content of the format [***],
+   * we use regex to fetch the separator that is between the square brackets.
+   */
+  if (match && match[1]) {
+    return match[1];
+  }
+
+  // If [***] is not present, we consider only a single separator to be present.
   return customSeparatorLine.substring(customSeparatorIdentifierLength);
 }
 
