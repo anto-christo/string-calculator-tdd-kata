@@ -1,0 +1,14 @@
+{
+  "name": "string-calculator-tdd-kata",
+  "version": "1.0.0",
+  "description": "A string calculator app built using TDD approach.",
+  "repository": "git@github.com:anto-christo/string-calculator-tdd-kata.git",
+  "author": "Anto Christopher <anto.christo.20@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.11",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.3"
+  }
+}
