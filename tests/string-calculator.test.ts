@@ -25,4 +25,9 @@ describe('The string calculator', () => {
     const result = add("1\n2,3");
     expect(result).toBe(6);
   })
+
+  test('should return the sum of all numbers if the input string has a custom separator', () => {
+    const result = add("//;\n1;2");
+    expect(result).toBe(3);
+  })
 })
