@@ -42,11 +42,11 @@ export function add(numbers: string): number {
   }
 
   const numbersToAdd = numbers.split(separator).map(number => Number(number));
-  return numbersToAdd.reduce((sum, number) => {
-    if (number < 0) {
-      throw new Error(`negatives not allowed, found ${number}`)
-    }
+  const negativeNumbers = numbersToAdd.filter(number => number < 0);
 
-    return sum + number;
-  }, 0);
+  if (negativeNumbers.length > 0) {
+    throw new Error(`negatives not allowed, found ${negativeNumbers.join(',')}`)
+  }
+
+  return numbersToAdd.reduce((sum, number) => sum + number, 0);
 }
