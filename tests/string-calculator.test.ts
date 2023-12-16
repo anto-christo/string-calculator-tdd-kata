@@ -35,4 +35,8 @@ describe('The string calculator', () => {
     const result = add("//;\n");
     expect(result).toBe(0);
   })
+
+  test('should throw an error with the negative number in message if a negative number is passed as input', () => {
+    expect(() => add("1,-2")).toThrow("negatives not allowed, found -2");
+  })
 })
