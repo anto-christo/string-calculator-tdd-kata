@@ -15,4 +15,9 @@ describe('The string calculator', () => {
     const result = add("1,2");
     expect(result).toBe(3);
   })
+
+  test('should return the sum of all numbers if the input string has more than two comma-separated numbers', () => {
+    const result = add("1,2,3");
+    expect(result).toBe(6);
+  })
 })
