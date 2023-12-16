@@ -54,8 +54,13 @@ describe('The string calculator', () => {
     expect(result).toBe(6);
   })
 
-  test('should return the sum of all numbers with multiple separators having more than 1 char length', () => {
+  test('should return the sum of all numbers with multiple separators having 1 char length', () => {
     const result = add("//[*][%]\n1*2%3");
+    expect(result).toBe(6);
+  })
+
+  test('should return the sum of all numbers with multiple separators having more than 1 char length', () => {
+    const result = add("//[**][%%]\n1**2%%3");
     expect(result).toBe(6);
   })
 })
