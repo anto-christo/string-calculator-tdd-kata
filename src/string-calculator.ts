@@ -5,7 +5,7 @@
  * @param {string} customSeparatorLine - The line containing custom separators enclosed in square brackets.
  * @returns {string | RegExp | null} The extracted separator(s) as a string, a regular expression, or null if no separator is found.
  */
-function getCustomMultiCharSeparator(customSeparatorLine: string) {
+function getCustomMultiCharSeparator(customSeparatorLine: string): string | RegExp | null {
   // This regex can be used to fetch the separators from within the square brackets.
   const regex = /\[([^\]]*)\]/g;
   const matchedSeparators: string[] = [];
@@ -39,7 +39,7 @@ function getCustomMultiCharSeparator(customSeparatorLine: string) {
  *
  * @param {string} numbers - The string containing numbers, possibly preceded by a custom separator.
  * @param {string} customSeparatorIdentifier - The identifier marking the start of the custom separator.
- * @returns {string | null} The extracted custom separator, or null if not present or invalid.
+ * @returns {string | RegExp | null} The extracted custom separator, or null if not present or invalid.
  */
 function getCustomSeparator(numbers: string, customSeparatorIdentifier: string): string | RegExp | null {
   const customSeparatorIdentifierLength = customSeparatorIdentifier.length;
@@ -57,8 +57,8 @@ function getCustomSeparator(numbers: string, customSeparatorIdentifier: string):
 
 /**
  * Adds the given sequence of numbers
- * @param numbers a comma-separated string of numbers
- * @returns the sum of given numbers
+ * @param {string} numbers a comma-separated string of numbers
+ * @returns {number} the sum of given numbers
  */
 export function add(numbers: string): number {
   let separator: RegExp | string = /,|\n/;
