@@ -30,4 +30,9 @@ describe('The string calculator', () => {
     const result = add("//;\n1;2");
     expect(result).toBe(3);
   })
+
+  test('should return zero if there are no numbers, i.e empty string in the line after custom separator', () => {
+    const result = add("//;\n");
+    expect(result).toBe(0);
+  })
 })
