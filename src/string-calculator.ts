@@ -1,26 +1,18 @@
 /**
- * Extracts and returns the custom separator from a string of numbers, identified by a custom separator identifier.
- * If the string does not start with the custom separator identifier or if there is no custom separator, returns null.
+ * Extracts multiple custom separators from a custom separator line and returns either a single string
+ * or a regular expression that matches any of the extracted separators.
  *
- * @param {string} numbers - The string containing numbers, possibly preceded by a custom separator.
- * @param {string} customSeparatorIdentifier - The identifier marking the start of the custom separator.
- * @returns {string | null} The extracted custom separator, or null if not present or invalid.
+ * @param {string} customSeparatorLine - The line containing custom separators enclosed in square brackets.
+ * @returns {string | RegExp | null} The extracted separator(s) as a string, a regular expression, or null if no separator is found.
  */
-function getCustomSeparator(numbers: string, customSeparatorIdentifier: string): string | RegExp | null {
-  const customSeparatorIdentifierLength = customSeparatorIdentifier.length
-
-  if (!numbers.startsWith(customSeparatorIdentifier)) {
-    return null;
-  }
-
-  const customSeparatorLine = numbers.split('\n')[0];
+function getCustomMultiCharSeparator(customSeparatorLine: string) {
   const regex = /\[([^\]]*)\]/g;
   const matchedSeparators: string[] = [];
   let match: RegExpExecArray | null = null;
 
   while ((match = regex.exec(customSeparatorLine)) !== null) {
     if (match[1]) {
-      matchedSeparators.push(match[1])
+      matchedSeparators.push(match[1]);
     }
   }
 
@@ -36,8 +28,29 @@ function getCustomSeparator(numbers: string, customSeparatorIdentifier: string):
     return new RegExp(escapedSeparators);
   }
 
-  // If a format that looks like [***] is not present, we consider only a single separator to be present.
-  return customSeparatorLine.substring(customSeparatorIdentifierLength);
+  return null;
+}
+
+/**
+ * Extracts and returns the custom separator from a string of numbers, identified by a custom separator identifier.
+ * If the string does not start with the custom separator identifier or if there is no custom separator, returns null.
+ *
+ * @param {string} numbers - The string containing numbers, possibly preceded by a custom separator.
+ * @param {string} customSeparatorIdentifier - The identifier marking the start of the custom separator.
+ * @returns {string | null} The extracted custom separator, or null if not present or invalid.
+ */
+function getCustomSeparator(numbers: string, customSeparatorIdentifier: string): string | RegExp | null {
+  const customSeparatorIdentifierLength = customSeparatorIdentifier.length;
+
+  if (!numbers.startsWith(customSeparatorIdentifier)) {
+    return null;
+  }
+
+  const customSeparatorLine = numbers.split('\n')[0];
+  const customMultiCharSeparator = getCustomMultiCharSeparator(customSeparatorLine);
+
+  // If a custom multi char separator is not present, we consider only a single separator to be present.
+  return customMultiCharSeparator ?? customSeparatorLine.substring(customSeparatorIdentifierLength);
 }
 
 /**
@@ -58,7 +71,7 @@ export function add(numbers: string): number {
   const negativeNumbers = numbersToAdd.filter(number => number < 0);
 
   if (negativeNumbers.length > 0) {
-    throw new Error(`negatives not allowed, found ${negativeNumbers.join(',')}`)
+    throw new Error(`negatives not allowed, found ${negativeNumbers.join(',')}`);
   }
 
   return numbersToAdd.reduce((sum, number) => sum += number <= 1000 ? number : 0, 0);
